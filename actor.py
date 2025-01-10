@@ -71,7 +71,6 @@ class Actor(BaseActor):
             for batch_idx, (inputs, targets) in enumerate(testloader):
 
                 inputs, targets = inputs.to(device), targets.to(device)
-
                 if net._get_name() in ['ResNet', 'MobileNetV2']:
                     outputs = net(inputs)
                 else:
@@ -83,4 +82,5 @@ class Actor(BaseActor):
                 total += targets.size(0)
                 correct += predicted.eq(targets).sum().item()
 
-        print(f'Epoch test acc:{correct}')
+        acc = 100. * correct / total
+        print('Acc:%.3f' % acc)

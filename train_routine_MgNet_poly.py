@@ -26,18 +26,13 @@ def main(_):
         num_classes = args.net_args['num_classes']
         net = models.resnet18(pretrained=False)
         net.fc = torch.nn.Linear(512, num_classes)
-        # net.fc = torch.nn.Linear(256, num_classes)
         if not args.dataset in ['ImageNet']:
             net.conv1 = nn.Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1),
                                   bias=False)
-            # net.maxpool = nn.MaxPool2d(1, dilation=1)
     else:
         net = Net(**args.net_args)
     print(net)
-    # if args.net_args['num_gpus'] > 1:
-    #     net = nn.DataParallel(net)
-    #     net.cuda()
-    # else:
+
 
     print('available', torch.cuda.is_available())
     print('counts', torch.cuda.device_count())
@@ -84,24 +79,6 @@ if __name__ == '__main__':
         args.net_args['Bblock_args']['perspective'] = 'linear'
     print(args.net_args['Bblock_args']['perspective'])
 
-    # args.net_args['in_channels'] = [22, 22, 44, 88]
-    # args.net_args['out_channels'] = [22, 44, 88, 88]
-
-    # args.net_args['in_channels'] = [45, 45, 90, 180]
-    #args.net_args['out_channels'] = [45, 90, 180, 180]
-
-    # args.net_args['in_channels'] = [90, 90, 180, 360]
-    # args.net_args['out_channels'] = [90, 180, 360, 360]
-
-    # args.net_args['in_channels'] = [180, 180, 360, 720]
-    # args.net_args['out_channels'] = [180, 360, 720, 720]
-
-    # args.net_args['in_channels'] = [182, 182, 364, 728]
-    # args.net_args['out_channels'] = [182, 364, 728, 728]
-
-    # args.net_args['in_channels'] = [192, 192, 384, 768]
-    # args.net_args['out_channels'] = [192, 384, 768, 768]
-
     '''
     choose type from: [regular, outside , relu-outside] 
     
@@ -127,42 +104,19 @@ if __name__ == '__main__':
     args.net_args['device'] = config_device(cpu_only=False, idx=0)
     args.net_args['num_gpus'] = 1
     args.debug = False
-    # "pol-init": "LFA,min,max",
-   #  args.net_args['Bblock_args']['pol-init'] = 'Xavier,,'
-    # args.num_epochs = 6
+
     args.net_args['Bblock_args']['pol-init'] = 'Xavier,,'
     if args.resume:
         print('Please specify experiment to resume')
         args.experiment_name = ''
     else:
-        # ----------------------------------------------------------------------------------------
-        # # *
-        # if args.net_args['Bblock_args']['linear_type'] == 'regular':
-        #     args.experiment_name = name_ex(BASE, '--(...u+bnreluB(f-bnreluAu))_degree2', args)
-        # # ----------------------------------------------------------------------------------------
-        # # **
-        # elif args.net_args['Bblock_args']['linear_type'] == 'outside':
-        #     args.experiment_name = name_ex(BASE, '--bnrelu(...u+B(f-bnreluAu))_degree2', args)
-        # # ----------------------------------------------------------------------------------------
-        # # **‡
-        # elif args.net_args['Bblock_args']['linear_type'] == 'relu-outside':
-        #     args.experiment_name = name_ex(BASE, '--relu(...u+bnB(f-bnreluAu))_degree2', args)
-
-        name = 'residual-' + args.net_args['Bblock_args']['residual_type'] + '_' \
-               'linear-' + args.net_args['Bblock_args']['linear_type'] + '_'
-
-        name += '/' + str(args.net_args['out_channels'])
-        name += '/xavier'
-
-        args.experiment_name = name_ex(BASE, '-' + name + '-', args)
+        args.experiment_name = 'experiment_name'
 
         # args.experiment_name += '-1'
         if args.debug == True:
             args.experiment_name += '-' + str(args.number[0])
         else:
             args.experiment_name += '-' + str(args.number[0])
-
-
 
 
     args.saver_path = os.path.join('results', args.experiment_name)
