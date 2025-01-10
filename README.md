@@ -12,7 +12,7 @@ pip3 install --r requirements
 Specify settings in configs.json. Some arguments need to be updated in train_routine_MgNet_poly.py or train_routine_MgNet_quad.py.
 
 ## Run
-For MgNet$$^{q2}$$ run
+For $$\text{MgNet}^{q2}$$ run
 ```bash
 python3 train_routine_MgNet_poly.py
 ```
