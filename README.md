@@ -16,7 +16,7 @@ For $$\text{MgNet}^{q2}$$ run
 ```bash
 python3 train_routine_MgNet_poly.py
 ```
-For MgNet$$^{g4}$$, MgNet$$^{g6}$$, MgNet$$^{g8}$$ run
+For  $$\text{MgNet}^{g4}$$,  $$\text{MgNet}^{g6}$$,  $$\text{MgNet}^{g8}$$ run
 ```bash
 python3 train_routine_MgNet_quad.py
 ```
