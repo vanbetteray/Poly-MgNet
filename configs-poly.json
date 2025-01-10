@@ -1,0 +1,45 @@
+{ "net_name": "MgNetpoly",
+  "num_epochs": 400,
+  "batch_size": 128,
+  "lr": 0.05,
+  "dataset": "Cifar10",
+  "data_path": "./data",
+  "channel_scaling": 1,
+  "criterion": "CE",
+  "experiment_name": "",
+  "saver_path": "",
+  "resume": "",
+  "debug": "",
+  "net_args": {
+            "device": "",
+            "num_gpus": 1,
+            "num_classes": 10,
+            "in_channels": [64, 64, 128, 256],
+            "out_channels": [64, 128, 256, 256],
+            "smoothings": [2, 2, 2, 2],
+             "block_args": {
+               "frequency":[1, 1, 1, 1],
+               "filters": "False",
+               "train_filters": "False"
+            },
+            "Ablock_args": {
+              "groups_size": "",
+              "groups": 1,
+              "shared": "True",
+              "block": "",
+              "k": 3,
+              "R_init": "",
+              "coarsest": 1,
+              "R_groups_size": 2
+            },
+          "Bblock_args": {
+            "groups_size": "",
+            "groups": 1,
+            "shared": "",
+            "block": "polynomial",
+            "perspective": "linfactor",
+            "degree": 1,
+            "pol-init": "xavier,,",
+            "training": 1,
+            "k": 3}
+  }}

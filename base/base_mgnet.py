@@ -193,7 +193,7 @@ class BaseMgBlock(nn.Module):
             deg_poly = kwargs['num_smoothings']
         else:
             deg_poly = kwargs['degree'] * kwargs['frequency'][0]
-        vals = torch.empty(deg_poly)
+
         train_coeff = kwargs['training']
 
         init_values = str.split(kwargs['pol-init'], ',')
@@ -206,6 +206,7 @@ class BaseMgBlock(nn.Module):
             raise "Not implemented yet"
 
         elif init == 'Xavier':
+            vals = torch.empty(1)
             if s == 0:
                 self.us = torch.Tensor(deg_poly).uniform_(-1, 1) * math.sqrt(6. / (out_channels + out_channels))
                 self.min = self.us[0]
@@ -213,28 +214,28 @@ class BaseMgBlock(nn.Module):
                 vals[0] = self.min
 
             elif s == kwargs['num_smoothings'] - 1:
-                vals[deg_poly - 1] = self.min
                 vals[0] = self.max
             else:
                 print('only implemented for g6')
-                vals[1] = 1 / self.us[1]
+                vals[0] = self.us[1]
 
         elif init == 'U':
+            vals = torch.empty(1)
             self.us = torch.empty(deg_poly).uniform_(int(a), int(b))
 
             self.min = self.us[0]
             self.max = self.us[-1]
 
             if s == 0:
-                vals[0] = 1 / self.min
+                vals[0] = self.min
             elif s == kwargs['num_smoothings'] - 1:
                 vals[deg_poly - 1] = self.min
-                vals[-1] = 1 / self.max
+                vals[-1] = self.max
             else:
                 vals[1] = self.us[1]
 
         if train_coeff == 1:
-            alpha = torch.nn.Parameter(vals, requires_grad=True)
+            alpha = torch.nn.Parameter(1 / vals, requires_grad=True)
         else:
             alpha = torch.nn.Parameter(1 / vals, requires_grad=False)
         return alpha
