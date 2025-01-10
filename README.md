@@ -1,7 +1,6 @@
 ## Requirements
 currently running with 
   python 3.6 with CUDA 11.0
-  python 3.9 with CUDA 12.1
 ### Packages
 ```bash
 pip3 install --user --upgrade pip
