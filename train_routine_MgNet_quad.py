@@ -11,7 +11,7 @@ BASE = 'MgNetpoly'
 print(BASE)
 
 from models.mgnet_poly_quad import MgBlock_polyquadratic as Block
-# from models.mgnet_poly_quad_real import MgBlock_real_polyquadratic as Block
+# from models.mgnet_poly_quad_real import MgBlock_real_polyquadratic as Block ## for g_4
 
 from models.mgnet import MgNet as Net
 
